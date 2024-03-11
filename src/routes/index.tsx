@@ -6,8 +6,11 @@ import { Favorites } from "../pages/favorites";
 
 //Passando as tipagens dos parametros
 export type StackParamList = {
-    home: undefined; //O proprio Native Stack pede undefined
-    detail: undefined;
+    home: undefined; 
+    detail: {
+        //Representa o item que é clicado no componente carlist
+        id: string
+    };
     favorites: undefined;
 }
 

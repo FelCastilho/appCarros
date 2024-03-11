@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { View, Text, StyleSheet, TextInputProps } from "react-native";
+import { View, Text, StyleSheet, TextInputProps, ActivityIndicator, FlatList } from "react-native";
 
 import { Header } from "../../components/header";
 import Input from "../../components/input/input";
@@ -9,6 +9,7 @@ import { db } from "../../services/firebaseConnection";
 import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 
 import { CarsProps } from "../../types/cars.type";
+import CarItem from "../../components/carlist";
 
 export function Home(){
 
@@ -59,14 +60,38 @@ export function Home(){
             <Header/>
 
             <View style={styles.container}>
+
                 <View style={styles.inputArea}>
+
                     <Input
                         placeholder="Procurando algum carro?"
                         value={searchInput}
                         onChangeText={text => setSearchInput(text)}
                     />
+
                 </View>
+
+                {loading && (
+                    <ActivityIndicator
+                        style={{marginTop: 14}}
+                        size="large"
+                        color="#000"
+                    />
+                )}  
+
+                <FlatList
+                    data={cars}
+                    keyExtractor={(item) => item.id}
+                    renderItem={( {item} ) => <CarItem data={item} widthScreen= {cars.length <= 1 ? "100%" : '49%'}/>}
+                    style={styles.list}
+                    numColumns={2} //Adicionado colunas
+                    columnWrapperStyle={{justifyContent: 'space-between'}}
+                    contentContainerStyle={{paddingBottom: 14}}
+                    showsVerticalScrollIndicator={false}
+                />
+
             </View>
+            
         </>
     )
 }
@@ -85,5 +110,10 @@ const styles = StyleSheet.create({
         padding: 8,
         backgroundColor: '#fff',
         borderRadius: 8
+    },
+    list:{
+        flex: 1,
+        marginTop: 4,
+        paddingTop: 14,
     }
 })

@@ -18,3 +18,20 @@ export interface CarImageProps{
     uid: string;
     url: string;
 }
+
+//Pegando os detalhes do item que estão cadastrados no firebase
+export interface CarDetailProps{
+    id: string;
+    name: string;
+    model: string;
+    price: string;
+    city: string;
+    km: string;
+    year: string;
+    description: string;
+    created: string;
+    owner: string;
+    uid: string;
+    whatsapp: string;
+    images: CarImageProps[];
+}
