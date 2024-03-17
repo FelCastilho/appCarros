@@ -25,6 +25,11 @@ export function Favorites() {
     loadFavoriteCars();
   }, [isFocued])
 
+  async function handleRemoveCar( id: string ){
+    const listcars = await removeItem(id);
+    setCars(listcars);
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
@@ -37,7 +42,14 @@ export function Favorites() {
       <FlatList
         data={cars}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <CarItem data={item} widthScreen={"100%"} />}
+        renderItem={({ item }) => (
+          <CarItem 
+            data={item} 
+            widthScreen={"100%"} 
+            enableRemove={true}
+            removeItem={() => handleRemoveCar( item.id )}
+            />
+        )}
         contentContainerStyle={{ paddingBottom: 14 }}
         showsVerticalScrollIndicator={false}
       />
