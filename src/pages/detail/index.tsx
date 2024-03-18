@@ -14,6 +14,7 @@ import { Label } from './components/label'
 import * as Linking from 'expo-linking'
 import { ModalBanner } from './components/modal'
 import useStorage from '../../hooks/UseStorage'
+import { useToast } from '../../hooks/useToast'
 
 type RotueDetailParams = {
   detail: {
@@ -32,6 +33,7 @@ export function Detail() {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedImage, setSelectedImage] = useState("")
   const { saveItem } = useStorage();
+  const { showToast } = useToast();
 
   useEffect(() => {
 
@@ -91,7 +93,9 @@ export function Detail() {
   async function handleFavoriteCar() {
     if (!car) return;
 
-    await saveItem(car)
+    await saveItem(car);
+
+    showToast('Carro favoritado com sucesso!', "SUCCESS")
   }
 
 
